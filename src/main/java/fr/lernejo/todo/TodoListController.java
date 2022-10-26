@@ -13,12 +13,12 @@ public class TodoListController {
 
     private final List<Todo> list = new ArrayList<Todo>();
 
-    @PostMapping
+    @PostMapping("/apu/todopost")
     public void addTodo(@RequestBody Todo t){
         this.list.add(t);
     }
 
-    @GetMapping
+    @GetMapping("/api/todo")
     public List<Todo> getTodoList(){
         return this.list;
     }
