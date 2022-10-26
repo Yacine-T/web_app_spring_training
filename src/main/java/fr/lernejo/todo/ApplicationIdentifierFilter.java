@@ -13,35 +13,12 @@ public class ApplicationIdentifierFilter implements Filter {
 
     String uuid = UUID.randomUUID().toString();
 
-    /**
-     * @param filterConfig
-     * @throws ServletException
-     */
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        Filter.super.init(filterConfig);
-    }
-
-    /**
-     * @param servletRequest
-     * @param servletResponse
-     * @param filterChain
-     * @throws IOException
-     * @throws ServletException
-     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        filterChain.doFilter(servletRequest, servletResponse);
-        if (servletRequest instanceof HttpServletResponse httpServletResponse){
+        if (servletResponse instanceof HttpServletResponse httpServletResponse){
             httpServletResponse.setHeader("Instance-Id", this.uuid);
         }
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    /**
-     *
-     */
-    @Override
-    public void destroy() {
-        Filter.super.destroy();
-    }
 }
