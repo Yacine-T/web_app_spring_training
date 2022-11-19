@@ -11,15 +11,20 @@ import java.util.List;
 @RestController
 public class TodoListController {
 
-    private final List<Todo> list = new ArrayList<Todo>();
+    TodoRepository todoRepository;
+    public TodoListController(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
+    }
 
     @PostMapping("/api/todo")
-    public void addTodo(@RequestBody Todo t){
-        this.list.add(t);
+    public void addTodo(@RequestBody TodoEntity t){
+        this.todoRepository.save(t);
     }
 
     @GetMapping("/api/todo")
-    public List<Todo> getTodoList(){
-        return this.list;
+    public List<TodoEntity> getTodoList(){
+        List<TodoEntity> l = new ArrayList<>();
+        this.todoRepository.findAll().forEach(l::add);
+        return l;
     }
 }
